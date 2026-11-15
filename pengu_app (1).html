@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&display=swap">
+<title>Babypol</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{--bg1:#f4f0ff;--bg2:#e3f6ff;--card:rgba(255,255,255,.78);--ink:#1b1038;--mut:#6d5fa0;--ac:#7c3aed;--ac2:#06b6d4;--gold:#d97706;--ok:#10b981;--bd:rgba(124,58,237,.18);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#0a0620;--bg2:#101a45;--card:rgba(255,255,255,.07);--ink:#f5f1ff;--mut:#a99bd6;--ac:#8b5cf6;--ac2:#22d3ee;--gold:#fbbf24;--ok:#34d399;--bd:rgba(255,255,255,.12)}}
+:root[data-theme="dark"]{--bg1:#0a0620;--bg2:#101a45;--card:rgba(255,255,255,.07);--ink:#f5f1ff;--mut:#a99bd6;--ac:#8b5cf6;--ac2:#22d3ee;--gold:#fbbf24;--ok:#34d399;--bd:rgba(255,255,255,.12)}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;height:100%;display:flex;flex-direction:column;background:linear-gradient(160deg,var(--bg1),var(--bg2));color:var(--ink);font:16px/1.35 Outfit,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent;user-select:none;touch-action:manipulation}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(40vmax 40vmax at 15% 15%,rgba(139,92,246,.4),transparent 60%),radial-gradient(45vmax 45vmax at 90% 65%,rgba(34,211,238,.28),transparent 60%),radial-gradient(30vmax 30vmax at 50% 105%,rgba(236,72,153,.25),transparent 60%);animation:aur 12s ease-in-out infinite alternate}
+@keyframes aur{to{transform:scale(1.15) translate(2%,-2%)}}
+.snow{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.8;background-size:200px 200px;background-image:radial-gradient(2px 2px at 20px 30px,#fffa,transparent),radial-gradient(2px 2px at 90px 120px,#fff8,transparent),radial-gradient(3px 3px at 160px 60px,#fffc,transparent),radial-gradient(2px 2px at 130px 180px,#fff9,transparent);animation:snow 14s linear infinite}
+@keyframes snow{to{background-position:0 200px}}
+header,main,nav{position:relative;z-index:1}
+header{text-align:center;padding:14px 16px 4px}
+.bal small{display:block;font-size:11px;letter-spacing:.25em;color:var(--mut);font-weight:600}
+.bal b{font-size:44px;font-weight:800;line-height:1.1;background:linear-gradient(180deg,var(--gold),#f472b6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bal i{font-style:normal}
+.chips{display:flex;justify-content:center;gap:8px;margin-top:8px}
+.chips span{background:var(--card);border:1px solid var(--bd);border-radius:999px;padding:4px 12px;font-size:13px;color:var(--mut);backdrop-filter:blur(10px)}
+.chips b{color:var(--ink)}
+main{flex:1;overflow-y:auto;padding:10px 16px 16px}
+nav{display:flex;gap:2px;margin:0 12px 10px;padding:6px;border-radius:26px;background:var(--card);border:1px solid var(--bd);backdrop-filter:blur(16px);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+nav button{flex:1;border:0;background:none;color:var(--mut);padding:6px 0;border-radius:20px;font-size:20px;line-height:1.2}
+nav button span{display:block}
+nav em{font-style:normal;font-size:10px;font-weight:600}
+nav .on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;box-shadow:0 4px 16px rgba(124,58,237,.5)}
+.card{display:flex;align-items:center;gap:12px;padding:12px;margin-bottom:10px;border-radius:20px;background:var(--card);border:1px solid var(--bd);backdrop-filter:blur(12px);box-shadow:0 4px 20px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.12)}
+.ic{flex:none;width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:28px;background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(34,211,238,.28))}
+.tx{flex:1;min-width:0}
+.tx b{display:block;font-size:16px}
+.tx small,.hint,.note{color:var(--mut)}
+.tx small{display:block;font-size:13px}
+.btn{position:relative;overflow:hidden;flex:none;border:0;border-radius:999px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;padding:10px 16px;font:inherit;font-weight:700;font-size:14px;box-shadow:0 0 18px rgba(139,92,246,.55),inset 0 1px 0 rgba(255,255,255,.4)}
+.btn:active{transform:scale(.95)}
+.btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-20deg);animation:sh 3s infinite}
+@keyframes sh{to{left:140%}}
+.tz{text-align:center;padding-top:2vh}
+.hint{font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px}
+.peng{position:relative;isolation:isolate;width:236px;height:236px;border-radius:50%;border:0;display:grid;place-items:center;padding:0;background:radial-gradient(circle at 50% 35%,rgba(139,92,246,.6),rgba(20,8,58,.85) 75%);box-shadow:0 0 60px rgba(139,92,246,.7),0 0 120px rgba(34,211,238,.3);transition:transform .08s}
+.peng::before{content:"";position:absolute;inset:-6px;border-radius:50%;z-index:-1;background:conic-gradient(var(--ac),var(--ac2),#ec4899,var(--ac));animation:rot 6s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.peng:active{transform:scale(.94)}
+.pg{width:176px;height:196px;animation:bob 3s ease-in-out infinite;pointer-events:none}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.tapv{font-size:30px;font-weight:800;margin:16px 0 10px}
+.tapv small{font-size:14px;color:var(--mut);font-weight:500}
+.bossc{flex-direction:column;text-align:center}
+.bossE{font-size:84px;animation:bob 2.5s ease-in-out infinite;filter:drop-shadow(0 0 18px #8b5cf6)}
+.bar{width:100%;height:16px;border-radius:8px;background:var(--bd);overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ok),var(--ac2));transition:width .3s}
+.bossc .btn{margin-top:10px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.it{flex-direction:column;text-align:center;margin:0;gap:2px}
+.big2{font-size:36px}
+.note{text-align:center;font-size:13px}
+.slot{text-align:center;padding:6px 0}
+.slot small{color:var(--mut)}
+.reels{display:flex;gap:10px;justify-content:center;padding:16px;border-radius:26px;background:linear-gradient(180deg,#2a1066,#14083a);border:3px solid #a78bfa;box-shadow:0 0 30px rgba(139,92,246,.7),inset 0 0 20px #000a}
+.reel{width:30%;aspect-ratio:1;display:grid;place-items:center;font-size:56px;background:#fff;border-radius:16px;box-shadow:inset 0 -8px 14px rgba(0,0,0,.2)}
+.reel.sp{animation:rs .15s linear infinite}
+@keyframes rs{50%{transform:translateY(5px);filter:blur(1px)}}
+.en{margin:14px 0;font-weight:800;color:var(--ac2)}
+.big{font-size:18px;padding:14px 28px;margin-bottom:10px}
+.pop{position:fixed;font-weight:900;font-size:22px;color:var(--ac2);text-shadow:0 0 8px var(--ac);pointer-events:none;animation:up .8s forwards;z-index:5}
+@keyframes up{to{transform:translateY(-80px);opacity:0}}
+.cf{position:fixed;z-index:6;font-size:24px;pointer-events:none;animation:cf 1s ease-out forwards}
+@keyframes cf{to{transform:translate(var(--x),var(--y)) rotate(360deg);opacity:0}}
+#t{position:fixed;z-index:5;left:50%;bottom:calc(100px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg1);padding:8px 16px;border-radius:20px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90%;text-align:center}
+#t.on{opacity:1}
+</style>
+</head>
+<body>
+<div class="snow"></div>
+<header><div class="bal"><small>BAKİYE</small><b><span id="c">0</span> <i>💎</i></b></div><div class="chips"><span>⚡ <b id="en">20</b></span><span>📈 <b id="r">0</b></span><span>⭐ Sv <b id="l">1</b></span></div></header>
+<main id="m"></main>
+<nav id="n"></nav>
+<div id="t"></div>
+<script>
+(function(){
+const tg=window.Telegram&&window.Telegram.WebApp;
+if(tg){try{tg.ready();tg.expand();document.documentElement.dataset.theme=tg.colorScheme}catch(e){}}
+const KEY="babypol_v1",$=s=>document.querySelector(s);
+const C=["⭐ Yıldız","☄️ Meteor","🪐 Gezegen","💜 Polygon Kristali","🌙 Ay Taşı"];
+const E=[{n:"Ay Turu",s:300,r:[40,80],d:.2},{n:"Mars Üssü",s:1800,r:[250,400],d:.4},{n:"Galaksi Yolculuğu",s:10800,r:[1800,2800],d:.7}];
+const T=[["fish","🚀","Topla"],["up","⬆️","Yükselt"],["slot","🎰","Slot"],["exp","🗺","Sefer"],["boss","👾","Boss"],["col","🎒","Albüm"]];
+let saved={};try{saved=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+let S=Object.assign({coins:0,energy:20,eT:Date.now(),moon:0,daily:0,tapLv:0,autoLv:0,exp:null,expEnd:0,items:{},bossLv:1,bossHp:500,lastBoss:0,sets:0,t:Date.now()},saved);
+const PG='<svg class="pg" viewBox="0 0 120 140"><ellipse cx="60" cy="134" rx="32" ry="5" fill="#0005"/><ellipse cx="26" cy="108" rx="9" ry="16" fill="#7c3aed" transform="rotate(20 26 108)"/><ellipse cx="94" cy="108" rx="9" ry="16" fill="#7c3aed" transform="rotate(-20 94 108)"/><ellipse cx="60" cy="108" rx="28" ry="26" fill="#8b5cf6"/><text x="60" y="112" font-size="11" font-weight="800" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif">BPOL</text><ellipse cx="46" cy="132" rx="11" ry="5" fill="#5b21b6"/><ellipse cx="74" cy="132" rx="11" ry="5" fill="#5b21b6"/><ellipse cx="60" cy="88" rx="32" ry="7" fill="#a78bfa"/><circle cx="60" cy="56" r="40" fill="#c4b5fd" fill-opacity=".25"/><circle cx="60" cy="58" r="30" fill="#ffd7b5"/><path d="M54 30Q60 18 68 28Q62 26 60 32Z" fill="#92400e"/><circle cx="48" cy="56" r="8" fill="#fff"/><circle cx="72" cy="56" r="8" fill="#fff"/><circle cx="49" cy="57" r="4.5" fill="#1e1040"/><circle cx="71" cy="57" r="4.5" fill="#1e1040"/><circle cx="50.5" cy="55" r="1.6" fill="#fff"/><circle cx="72.5" cy="55" r="1.6" fill="#fff"/><circle cx="40" cy="68" r="5" fill="#fb7185" fill-opacity=".5"/><circle cx="80" cy="68" r="5" fill="#fb7185" fill-opacity=".5"/><path d="M52 72Q60 80 68 72" stroke="#b45309" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="60" cy="56" r="40" fill="none" stroke="#c4b5fd" stroke-width="4"/><path d="M30 40Q36 26 50 20" stroke="#fff" stroke-opacity=".7" stroke-width="4" fill="none" stroke-linecap="round"/></svg>';
+let tab="fish";
+const save=()=>{try{S.t=Date.now();localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const fmt=n=>n>=1e6?(n/1e6).toFixed(1)+"M":n>=1e4?(n/1e3).toFixed(1)+"K":Math.floor(n);
+const mult=()=>1+.25*S.moon,rate=()=>S.autoLv*mult(),pow=()=>Math.floor((1+S.tapLv)*mult()),lv=()=>S.tapLv+S.autoLv+1+S.moon*5;
+const cost=k=>Math.floor(k==="tap"?25*Math.pow(1.35,S.tapLv):60*Math.pow(1.3,S.autoLv));
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const dur=s=>{s=Math.max(0,Math.ceil(s));return Math.floor(s/3600)+"s "+Math.floor(s%3600/60)+"dk "+s%60+"sn"};
+function toast(x){const t=$("#t");t.textContent=x;t.className="on";clearTimeout(toast.h);toast.h=setTimeout(()=>t.className="",2500)}
+function head(){$("#c").textContent=fmt(S.coins);$("#r").textContent=fmt(rate()*3600)+"/sa";$("#l").textContent=lv();$("#en").textContent=S.energy}
+function pop(e,x){const s=document.createElement("span");s.className="pop";s.textContent=x;s.style.left=(e.clientX-10)+"px";s.style.top=(e.clientY-30)+"px";document.body.appendChild(s);setTimeout(()=>s.remove(),800)}
+const SY=["💜","⭐","🪐","🚀","👶","7️⃣"];
+let reel=["💜","⭐","🪐"],busy=false;
+function regen(){const n=Math.floor((Date.now()-S.eT)/60000);if(n>0){S.energy=Math.min(20,S.energy+n);S.eT+=n*60000}if(S.energy>=20)S.eT=Date.now()}
+function boom(){for(let i=0;i<18;i++){const x=document.createElement("span");x.className="cf";x.textContent=["💜","⭐","✨","🚀"][i%4];x.style.left="50%";x.style.top="45%";x.style.setProperty("--x",rnd(-160,160)+"px");x.style.setProperty("--y",rnd(-260,60)+"px");document.body.appendChild(x);setTimeout(()=>x.remove(),1000)}}
+function slotView(){regen();return `<div class="slot"><div class="reels">${reel.map(x=>`<div class="reel">${x}</div>`).join("")}</div><div class="en">⚡ ${S.energy}/20 enerji</div><button class="btn big" data-a="spin">🎰 ÇEVİR (1 ⚡)</button><br><small>Üçlü eşleşme büyük ödül, 💜💜💜 jackpot!<br>Enerji dakikada 1 yenilenir · Sadece oyun puanı</small></div>`}
+function doSpin(){regen();if(busy)return;if(S.energy<1)return toast("Enerji bitti, dakikada 1 yenilenir");
+ S.energy--;busy=true;const rs=document.querySelectorAll(".reel");rs.forEach(r=>r.classList.add("sp"));
+ const iv=setInterval(()=>rs.forEach(r=>r.textContent=SY[rnd(0,5)]),80);
+ setTimeout(()=>{clearInterval(iv);reel=[0,1,2].map(()=>SY[rnd(0,5)]);const [a,b,c]=reel,base=100*lv();let w=0;
+  if(a===b&&b===c)w=base*(a==="💜"?50:10);else if(a===b||b===c||a===c)w=base*2;
+  S.coins+=w;busy=false;toast(w?"🎉 +"+fmt(w)+" 💎":"Olmadı, tekrar dene!");if(w>=base*10)boom();
+  head();save();if(tab==="slot")view()},1000)}
+const card=(ic,t,sub,btn)=>`<div class="card"><div class="ic">${ic}</div><div class="tx"><b>${t}</b><small>${sub}</small></div>${btn}</div>`;
+const B=(a,txt,v)=>`<button class="btn" data-a="${a}"${v!==undefined?` data-v="${v}"`:""}>${txt}</button>`;
+function view(){
+ $("#n").innerHTML=T.map(x=>`<button class="${x[0]===tab?"on":""}" data-a="tab" data-v="${x[0]}"><span>${x[1]}</span><em>${x[2]}</em></button>`).join("");
+ let h="";
+ if(tab==="fish")h=`<div class="tz"><div class="hint">Dokun ve kazan</div><button class="peng" data-a="tap">${PG}</button><div class="tapv">+${pow()} 💎 <small>/ dokunuş</small></div>${B("daily","🎁 Günlük ödül")}</div>`;
+ else if(tab==="up")h=card("🚀","Roket · Sv. "+(S.tapLv+1),"Dokunuş başına +1 💎",B("buyTap",fmt(cost("tap"))+" 💎"))+card("👶","Yardımcı Bebek · "+S.autoLv,"Her biri saniyede +1 💎",B("buyAuto",fmt(cost("auto"))+" 💎"))+card("🌙","Aya Fırlat · "+S.moon,5*(S.moon+1)+" Yardımcı Bebek gerekir · kalıcı +%25",B("moon","Fırlat"));
+ else if(tab==="slot")h=slotView();
+ else if(tab==="exp"){
+  if(S.exp!==null){const l=S.expEnd-Date.now(),x=E[S.exp];
+   h=card("🗺",x.n,l>0?"Kalan: <span id='tm'>"+dur(l/1000)+"</span>":"Sefer bitti!",l>0?"":"<button class='btn' id='cl' data-a='claim'>🎁 Al</button>")}
+  else h=E.map((x,i)=>card(["🌙","🔴","🌌"][i],x.n,dur(x.s)+" · "+x.r[0]+"-"+x.r[1]+" 💎",B("go","Çık",i))).join("")}
+ else if(tab==="boss"){const max=500*S.bossLv;
+  h=`<div class="card bossc"><div class="bossE">👾</div><b>Boss · Seviye ${S.bossLv}</b><div class="bar"><i style="width:${Math.max(0,S.bossHp/max*100)}%"></i></div><small>❤️ ${Math.max(0,S.bossHp)} / ${max}</small>${B("atk","⚔️ Saldır ("+pow()*5+" hasar)")}</div>`}
+ else h=`<div class="grid">${C.map(i=>`<div class="card it"><div class="big2">${i.split(" ")[0]}</div><small>${i.split(" ").slice(1).join(" ")}</small><b>${S.items[i]||0}</b></div>`).join("")}</div><p class="note">Hepsini topla: +1000 💎 · Tamamlanan set: ${S.sets}</p>`;
+ $("#m").innerHTML=h;
+}
+function act(a,v,e){
+ if(a==="tap"){S.coins+=pow();pop(e,"+"+pow())}
+ else if(a==="tab"){tab=v;view()}
+ else if(a==="spin"){doSpin();return}
+ else if(a==="daily"){const d=new Date().toDateString();if(S.daily===d)return toast("Bugünkü ödülü aldın");S.daily=d;const g=500*lv();S.coins+=g;toast("🎁 Günlük +"+fmt(g)+" 💎");boom()}
+ else if(a==="moon"){const need=5*(S.moon+1);if(S.autoLv<need)return toast(need+" Yardımcı Bebek gerekir");S.autoLv=0;S.moon++;toast("🌙 Aya fırlatıldı! Kalıcı kazanç +%25");boom();view()}
+ else if(a==="buyTap"||a==="buyAuto"){const k=a==="buyTap"?"tap":"auto",c=cost(k);if(S.coins<c)return toast("Yetersiz bakiye");S.coins-=c;if(k==="tap")S.tapLv++;else S.autoLv++;view()}
+ else if(a==="go"){if(S.exp===null){S.exp=+v;S.expEnd=Date.now()+E[v].s*1000;view()}}
+ else if(a==="claim"){const x=E[S.exp],g=Math.floor(rnd(x.r[0],x.r[1])*(1+(lv()-1)*0.1));S.coins+=g;let m="🎁 +"+fmt(g)+" 💎";
+  if(Math.random()<x.d){const it=C[rnd(0,C.length-1)];S.items[it]=(S.items[it]||0)+1;m+=" · "+it;
+   if(C.every(i=>S.items[i]>0)){C.forEach(i=>S.items[i]--);S.coins+=1000;S.sets++;m+=" · 🏆 Set tamam! +1000 💎"}}
+  S.exp=null;toast(m);view()}
+ else if(a==="atk"){if(Date.now()-S.lastBoss<1500)return toast("Biraz bekle…");
+  const d=pow()*5;S.bossHp-=d;S.lastBoss=Date.now();
+  if(S.bossHp<=0){const r=200*S.bossLv;S.coins+=r;toast("💀 Boss yenildi! +"+fmt(r)+" 💎");S.bossLv++;S.bossHp=500*S.bossLv}
+  else toast("⚔️ "+d+" hasar!");
+  view()}
+ head();save();
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(b)act(b.dataset.a,b.dataset.v,e)});
+const off=Math.min((Date.now()-S.t)/1000,7200)*rate();
+if(off>=1){S.coins+=Math.floor(off);setTimeout(()=>toast("Sen yokken +"+fmt(off)+" 💎"),300)}
+setInterval(()=>{S.coins+=rate();regen();head();
+ if(tab==="exp"&&S.exp!==null){const l=S.expEnd-Date.now();if(l>0){const t=$("#tm");if(t)t.textContent=dur(l/1000)}else if(!$("#cl"))view()}
+ save()},1000);
+head();view();
+})();
+</script>
+</body>
+</html>
